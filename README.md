@@ -1,3 +1,6 @@
+[![Build Status](https://www.travis-ci.org/timvlaer/tscfg-maven-plugin.svg?branch=master)](https://www.travis-ci.org/timvlaer/tscfg-maven-plugin)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+
 # tscfg-maven-plugin
 
 Maven plugin that generates the boiler-plate for a [Typesafe Config](https://github.com/typesafehub/config) properties file using the excellent [tscfg](https://github.com/carueda/tscfg) library by carueda.
