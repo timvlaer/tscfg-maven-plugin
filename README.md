@@ -1,13 +1,13 @@
 # tscfg-maven-plugin
 
-Maven plugin that generates the boiler-plate for a [Typesafe Config](https://github.com/typesafehub/config) properties file using [tscfg](https://github.com/carueda/tscfg).
+Maven plugin that generates the boiler-plate for a [Typesafe Config](https://github.com/typesafehub/config) properties file using the excellent [tscfg](https://github.com/carueda/tscfg) library by carueda.
 
 This plugin takes a configuration file (templateFile) and generates objects to hold your configuration.
 
 ## Usage
 ```xml
 <plugin>
-    <groupId>com.github.carueda</groupId>
+    <groupId>com.github.timvlaer</groupId>
     <artifactId>tscfg-maven-plugin</artifactId>
     <version>0.2.0</version>
     <configuration>
