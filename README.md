@@ -1,5 +1,6 @@
 [![Build Status](https://www.travis-ci.org/timvlaer/tscfg-maven-plugin.svg?branch=master)](https://www.travis-ci.org/timvlaer/tscfg-maven-plugin)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.timvlaer/tscfg-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.timvlaer/tscfg-maven-plugin)
 
 # tscfg-maven-plugin
 
