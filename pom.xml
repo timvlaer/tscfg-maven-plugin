@@ -9,6 +9,7 @@
   <packaging>maven-plugin</packaging>
 
   <name>tscfg Maven Plugin</name>
+  <description>Maven plugin that generates the boiler-plate Java code for a Typesafe Config properties file using tscfg.</description>
   <url>https://github.com/timvlaer/tscfg-maven-plugin</url>
 
   <developers>
