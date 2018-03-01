@@ -15,9 +15,10 @@ This plugin takes a configuration file (templateFile) and generates objects to h
     <artifactId>tscfg-maven-plugin</artifactId>
     <version>0.2.0</version>
     <configuration>
-        <templateFile>config-spec/aligner.spec.conf</templateFile>
-        <packageName>com.sentiance.service.aligner.config</packageName>
-        <className>AlignerConfig</className>
+        <templateFile>config-spec/service.spec.conf</templateFile>
+        <packageName>com.sentiance.service.config</packageName>
+        <className>ServiceConfig</className>
+        <generateGetters>true</generateGetters>
     </configuration>
      <executions>
         <execution>
@@ -35,7 +36,16 @@ This plugin takes a configuration file (templateFile) and generates objects to h
 * className: the name of the generated config class 
 * packageName: the package of the generated config class
 * outputDirectory: the output directory for the generated class, default is `target/generated-sources/tscfg/`
+* generateGetters: (true|false) generate getters for configuration  
 
 ## Current limitations
 * Currently only Java class generated is supported. It should be easy to extend this plugin to generate Scala files.
 * This plugin always generates java classes for Java 8 and above. This should also be easy to extend.   
+
+## Build the plugin yourself
+* `git clone https://github.com/timvlaer/tscfg-maven-plugin.git`
+* `cd tscfg-maven-plugin`
+* `git checkout develop`
+* `mvn clean install`
+
+Configure your pom to depend on version `0.3.0-SNAPSHOT` of the plugin.

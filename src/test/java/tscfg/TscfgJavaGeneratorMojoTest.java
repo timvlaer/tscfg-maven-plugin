@@ -63,6 +63,22 @@ public class TscfgJavaGeneratorMojoTest {
   }
 
   @Test
+  public void generateGetters() throws Exception {
+    mojo.setGenerateGetters(true);
+
+    mojo.execute();
+
+    Mockito.verify(project).addCompileSourceRoot(outputFolder.getRoot().getAbsolutePath());
+
+    File resultFile = new File(outputFolder.getRoot(), "com/test/config/TestConfig.java");
+    assertThat(resultFile).exists();
+
+    String result = new String(Files.readAllBytes(resultFile.toPath()), UTF_8);
+    assertThat(result).contains("int getPort()");
+    assertThat(result).contains("String getServer()");
+  }
+
+  @Test
   public void executeFullyOverwritesGeneratedFile() throws Exception {
     mojo.execute();
 
@@ -86,7 +102,10 @@ public class TscfgJavaGeneratorMojoTest {
   }
 
   private byte[] templateContent() {
-    String templateConfig = "test {\n  server: \"string\"\n  port: \"int\"\n}";
+    String templateConfig = "test {\n" +
+        "  server: \"string\"\n" +
+        "  port: \"int\"\n" +
+        "}";
     return templateConfig.getBytes(UTF_8);
   }
 
