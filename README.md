@@ -4,7 +4,8 @@
 
 # tscfg-maven-plugin
 
-Maven plugin that generates the boiler-plate for a [Typesafe Config](https://github.com/typesafehub/config) properties file using the excellent [tscfg](https://github.com/carueda/tscfg) library by carueda.
+Maven plugin that generates the boiler-plate for a [Typesafe Config](https://github.com/typesafehub/config) properties file
+using the excellent [tscfg](https://github.com/carueda/tscfg) library by @carueda.
 
 This plugin takes a configuration file (templateFile) and generates objects to hold your configuration.
 
@@ -13,12 +14,14 @@ This plugin takes a configuration file (templateFile) and generates objects to h
 <plugin>
     <groupId>com.github.timvlaer</groupId>
     <artifactId>tscfg-maven-plugin</artifactId>
-    <version>0.4.0</version>
+    <version>0.5.0-SNAPSHOT</version>
     <configuration>
         <templateFile>config-spec/service.spec.conf</templateFile>
         <packageName>com.sentiance.service.config</packageName>
         <className>ServiceConfig</className>
         <generateGetters>true</generateGetters>
+        <useOptionals>false</useOptionals>
+        <useDurations>false</useDurations>
     </configuration>
      <executions>
         <execution>

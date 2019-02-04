@@ -38,6 +38,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <maven.version>3.5.4</maven.version>
+
+    <tscfg.version>0.9.9</tscfg.version>
   </properties>
 
   <dependencies>
@@ -63,7 +65,7 @@
     <dependency>
       <groupId>com.github.carueda</groupId>
       <artifactId>tscfg_2.12</artifactId>
-      <version>0.9.4</version>
+      <version>${tscfg.version}</version>
     </dependency>
 
     <dependency>

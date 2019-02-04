@@ -2,7 +2,6 @@ package tscfg;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Execute;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -20,17 +19,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
-import static java.nio.file.StandardOpenOption.WRITE;
+import static java.nio.file.StandardOpenOption.*;
 
 @Mojo(name = "generate-config-class", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 @Execute(phase = LifecyclePhase.GENERATE_SOURCES, goal = "generate-config-class")
 public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
-  public static final Charset UTF_8 = Charset.forName("UTF-8");
-  public static final String PACKAGE_SEPARATOR = ".";
-  public static final String JAVA_FILE_EXTENSION = ".java";
+  static final Charset UTF_8 = Charset.forName("UTF-8");
+  private static final String PACKAGE_SEPARATOR = ".";
+  private static final String JAVA_FILE_EXTENSION = ".java";
 
   @Parameter(required = true)
   private File templateFile;
@@ -47,10 +44,16 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   @Parameter(defaultValue = "${project}", required = true, readonly = true)
   private MavenProject project;
 
-  @Parameter(required = false, defaultValue = "false")
+  @Parameter(defaultValue = "false")
   private boolean generateGetters;
 
-  public void execute() throws MojoExecutionException, MojoFailureException {
+  @Parameter(defaultValue = "false")
+  private boolean useOptionals;
+
+  @Parameter(defaultValue = "false")
+  private boolean useDurations;
+
+  public void execute() throws MojoExecutionException {
     GenResult generatorResult = generateJavaCodeForTemplate(templateFile);
     writeGeneratedCodeToJavaFile(generatorResult.code());
 
@@ -59,7 +62,9 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   }
 
   private GenResult generateJavaCodeForTemplate(File templateFile) throws MojoExecutionException {
-    Generator tscfgGenerator = new JavaGen(new GenOpts(packageName, className, false, false, generateGetters));
+    GenOpts genOpts = new GenOpts(packageName, className, false, false, false,
+            generateGetters, useOptionals, useDurations);
+    Generator tscfgGenerator = new JavaGen(genOpts);
     return tscfgGenerator.generate(ModelBuilder.apply(readTscfgTemplate(templateFile)).objectType());
   }
 
@@ -118,5 +123,13 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
   void setGenerateGetters(boolean generateGetters) {
     this.generateGetters = generateGetters;
+  }
+
+  void setUseOptionals(boolean useOptionals) {
+    this.useOptionals = useOptionals;
+  }
+
+  void setUseDurations(boolean useDurations) {
+    this.useDurations = useDurations;
   }
 }
