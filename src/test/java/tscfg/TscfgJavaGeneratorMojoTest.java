@@ -13,11 +13,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 
 import static java.nio.file.StandardOpenOption.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 import static tscfg.TscfgJavaGeneratorMojo.UTF_8;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -63,19 +65,38 @@ public class TscfgJavaGeneratorMojoTest {
   }
 
   @Test
+  public void executeFailsIfTemplateFileDoesNotExist() throws MojoExecutionException {
+    expectedException.expect(MojoExecutionException.class);
+    expectedException.expectMessage("Failed to read template file");
+
+    mojo.setTemplateFile(new File(templateFolder.getRoot(), "unexisting.conf"));
+    mojo.execute();
+  }
+
+  @Test
   public void generateGetters() throws Exception {
     mojo.setGenerateGetters(true);
 
-    mojo.execute();
-
-    Mockito.verify(project).addCompileSourceRoot(outputFolder.getRoot().getAbsolutePath());
-
-    File resultFile = new File(outputFolder.getRoot(), "com/test/config/TestConfig.java");
-    assertThat(resultFile).exists();
-
-    String result = new String(Files.readAllBytes(resultFile.toPath()), UTF_8);
+    String result = executeMojo();
     assertThat(result).contains("int getPort()");
     assertThat(result).contains("String getServer()");
+    assertThat(result).contains("long getLength()");
+  }
+
+  @Test
+  public void useOptionals() throws Exception {
+    mojo.setUseOptionals(true);
+
+    String result = executeMojo();
+    assertThat(result).contains("java.util.Optional<java.lang.String> server");
+  }
+
+  @Test
+  public void useDurations() throws Exception {
+    mojo.setUseDurations(true);
+
+    String result = executeMojo();
+    assertThat(result).contains("public final java.time.Duration length;");
   }
 
   @Test
@@ -92,6 +113,18 @@ public class TscfgJavaGeneratorMojoTest {
   }
 
   @Test
+  public void executeFailsIfGeneratedCodeCannotBeWritten() throws Exception {
+    mojo.execute();
+
+    expectedException.expect(MojoExecutionException.class);
+    expectedException.expectMessage("Failed to write file");
+
+    File resultFile = new File(outputFolder.getRoot(), "com/test/config/TestConfig.java");
+    assertTrue(resultFile.setWritable(false));
+    mojo.execute();
+  }
+
+  @Test
   public void templateFileDoesNotExists() throws Exception {
     expectedException.expect(MojoExecutionException.class);
     expectedException.expectMessage("Failed to read template file (");
@@ -103,10 +136,20 @@ public class TscfgJavaGeneratorMojoTest {
 
   private byte[] templateContent() {
     String templateConfig = "test {\n" +
-        "  server: \"string\"\n" +
+        "  server: \"string?\"\n" +
         "  port: \"int\"\n" +
+        "  length: \"duration\"\n" +
         "}";
     return templateConfig.getBytes(UTF_8);
+  }
+
+  private String executeMojo() throws MojoExecutionException, IOException {
+    mojo.execute();
+
+    File resultFile = new File(outputFolder.getRoot(), "com/test/config/TestConfig.java");
+    assertThat(resultFile).exists();
+
+    return new String(Files.readAllBytes(resultFile.toPath()), UTF_8);
   }
 
 }
