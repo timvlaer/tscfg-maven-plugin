@@ -5,7 +5,7 @@
 
   <groupId>com.github.timvlaer</groupId>
   <artifactId>tscfg-maven-plugin</artifactId>
-  <version>0.5.1</version>
+  <version>0.5.2</version>
   <packaging>maven-plugin</packaging>
 
   <name>tscfg Maven Plugin</name>
@@ -133,6 +133,7 @@
           <execution>
             <id>integration-test</id>
             <goals>
+              <goal>install</goal>
               <goal>run</goal>
             </goals>
           </execution>
