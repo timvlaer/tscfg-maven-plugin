@@ -34,12 +34,23 @@ This plugin takes a configuration file (templateFile) and generates objects to h
 </plugin>
 ```
 
+To compile the generated code, add the [Lightbend Config](https://github.com/lightbend/config) dependency to your project:
+```xml
+<dependency>
+    <groupId>com.typesafe</groupId>
+    <artifactId>config</artifactId>
+    <version>1.3.3</version>
+</dependency>
+```
+
 ## Configuration
 * templateFile: typesafe configuration template file
 * className: the name of the generated config class 
 * packageName: the package of the generated config class
 * outputDirectory: the output directory for the generated class, default is `target/generated-sources/tscfg/`
-* generateGetters: (true|false) generate getters for configuration  
+* generateGetters: (true|false) generate getters for configuration
+* useOptionals: (true|false) use java8 Optional object for optional fields
+* useDurations: (true|false) if true, properties of type `duration` will be of type `java.time.Duration` in the generated code. If false, it will be a long.
 
 ## Current limitations
 * Currently only Java class generated is supported. It should be easy to extend this plugin to generate Scala files.
