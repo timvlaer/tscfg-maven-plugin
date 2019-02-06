@@ -62,4 +62,4 @@ To compile the generated code, add the [Lightbend Config](https://github.com/lig
 * `git checkout develop`
 * `mvn clean install`
 
-Configure your pom to depend on version `0.6.0-SNAPSHOT` of the plugin.
+Configure your pom to depend on version `0.7.0-SNAPSHOT` of the plugin.
