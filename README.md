@@ -14,7 +14,7 @@ This plugin takes a configuration file (templateFile) and generates objects to h
 <plugin>
     <groupId>com.github.timvlaer</groupId>
     <artifactId>tscfg-maven-plugin</artifactId>
-    <version>0.6.0</version>
+    <version>0.7.0</version>
     <configuration>
         <templateFile>config-spec/service.spec.conf</templateFile>
         <packageName>com.sentiance.service.config</packageName>
@@ -39,7 +39,7 @@ To compile the generated code, add the [Lightbend Config](https://github.com/lig
 <dependency>
     <groupId>com.typesafe</groupId>
     <artifactId>config</artifactId>
-    <version>1.3.3</version>
+    <version>1.3.4</version>
 </dependency>
 ```
 
@@ -51,6 +51,7 @@ To compile the generated code, add the [Lightbend Config](https://github.com/lig
 * generateGetters: (true|false) generate getters for configuration
 * useOptionals: (true|false) use java8 Optional object for optional fields
 * useDurations: (true|false) if true, properties of type `duration` will be of type `java.time.Duration` in the generated code. If false, it will be a long.
+* allRequired: (true|false) if true, optional tags are ignored and every property in the config file is required. Defaults to false.
 
 ## Current limitations
 * Currently only Java class generated is supported. It should be easy to extend this plugin to generate Scala files.
@@ -62,4 +63,4 @@ To compile the generated code, add the [Lightbend Config](https://github.com/lig
 * `git checkout develop`
 * `mvn clean install`
 
-Configure your pom to depend on version `0.6.0-SNAPSHOT` of the plugin.
+Configure your pom to depend on version `0.7.0-SNAPSHOT` of the plugin.
