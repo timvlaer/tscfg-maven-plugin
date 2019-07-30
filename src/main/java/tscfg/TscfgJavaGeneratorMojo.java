@@ -53,6 +53,9 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   @Parameter(defaultValue = "false")
   private boolean useDurations;
 
+  @Parameter(defaultValue = "false")
+  private boolean allRequired;
+
   public void execute() throws MojoExecutionException {
     GenResult generatorResult = generateJavaCodeForTemplate(templateFile);
     writeGeneratedCodeToJavaFile(generatorResult.code());
@@ -62,10 +65,10 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   }
 
   private GenResult generateJavaCodeForTemplate(File templateFile) throws MojoExecutionException {
-    GenOpts genOpts = new GenOpts(packageName, className, false, false, false,
+    GenOpts genOpts = new GenOpts(packageName, className, allRequired, false, false, false,
             generateGetters, useOptionals, useDurations);
     Generator tscfgGenerator = new JavaGen(genOpts);
-    return tscfgGenerator.generate(ModelBuilder.apply(readTscfgTemplate(templateFile)).objectType());
+    return tscfgGenerator.generate(ModelBuilder.apply(readTscfgTemplate(templateFile), allRequired).objectType());
   }
 
   private String readTscfgTemplate(File templateFile) throws MojoExecutionException {
