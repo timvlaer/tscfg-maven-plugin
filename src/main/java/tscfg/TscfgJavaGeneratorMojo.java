@@ -65,8 +65,18 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   }
 
   private GenResult generateJavaCodeForTemplate(File templateFile) throws MojoExecutionException {
-    GenOpts genOpts = new GenOpts(packageName, className, allRequired, false, false, false,
-            generateGetters, useOptionals, useDurations);
+    boolean useBackticks = false;
+    boolean generateJava7Code = false;
+    GenOpts genOpts = new GenOpts(
+        packageName,
+        className,
+        allRequired,
+        generateJava7Code,
+        useBackticks,
+        generateGetters,
+        useOptionals,
+        useDurations
+    );
     Generator tscfgGenerator = new JavaGen(genOpts);
     return tscfgGenerator.generate(ModelBuilder.apply(readTscfgTemplate(templateFile), allRequired).objectType());
   }
