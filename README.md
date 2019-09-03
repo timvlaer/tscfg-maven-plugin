@@ -54,8 +54,9 @@ To compile the generated code, add the [Lightbend Config](https://github.com/lig
 * allRequired: (true|false) if true, optional tags are ignored and every property in the config file is required. Defaults to false.
 
 ## Current limitations
-* Currently only Java class generated is supported. It should be easy to extend this plugin to generate Scala files.
-* This plugin always generates java classes for Java 8 and above. This should also be easy to extend.   
+* This plugin currently only generates Java code.
+* This plugin always generates java classes for Java 8 and above.
+Open a ticket or PR if you'd like to change the above.
 
 ## Build the plugin yourself
 * `git clone https://github.com/timvlaer/tscfg-maven-plugin.git`
