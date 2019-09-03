@@ -14,7 +14,7 @@ This plugin takes a configuration file (templateFile) and generates objects to h
 <plugin>
     <groupId>com.github.timvlaer</groupId>
     <artifactId>tscfg-maven-plugin</artifactId>
-    <version>0.7.0</version>
+    <version>0.8.0</version>
     <configuration>
         <templateFile>config-spec/service.spec.conf</templateFile>
         <packageName>com.sentiance.service.config</packageName>
@@ -63,4 +63,4 @@ To compile the generated code, add the [Lightbend Config](https://github.com/lig
 * `git checkout develop`
 * `mvn clean install`
 
-Configure your pom to depend on version `0.7.0-SNAPSHOT` of the plugin.
+Configure your pom to depend on version `0.9.0-SNAPSHOT` of the plugin.
