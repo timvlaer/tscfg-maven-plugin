@@ -50,7 +50,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   @Parameter(defaultValue = "false")
   private boolean useOptionals;
 
-  @Parameter(defaultValue = "false")
+  @Parameter(defaultValue = "true")
   private boolean useDurations;
 
   @Parameter(defaultValue = "false")
@@ -67,11 +67,13 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   private GenResult generateJavaCodeForTemplate(File templateFile) throws MojoExecutionException {
     boolean useBackticks = false;
     boolean generateJava7Code = false;
+    boolean generateScala12Code = true;
     GenOpts genOpts = new GenOpts(
         packageName,
         className,
         allRequired,
         generateJava7Code,
+        generateScala12Code,
         useBackticks,
         generateGetters,
         useOptionals,
@@ -83,7 +85,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
   private String readTscfgTemplate(File templateFile) throws MojoExecutionException {
     try {
-      return new String(Files.readAllBytes(templateFile.toPath()), UTF_8);
+      return Files.readString(templateFile.toPath(), UTF_8);
     } catch (IOException e) {
       throw new MojoExecutionException("Failed to read template file (" + templateFile + "): " + e.getClass() + ": " + e.getMessage());
     }

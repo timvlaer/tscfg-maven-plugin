@@ -21,7 +21,7 @@ This plugin takes a configuration file (templateFile) and generates objects to h
         <className>ServiceConfig</className>
         <generateGetters>true</generateGetters>
         <useOptionals>false</useOptionals>
-        <useDurations>false</useDurations>
+        <useDurations>true</useDurations>
     </configuration>
      <executions>
         <execution>
