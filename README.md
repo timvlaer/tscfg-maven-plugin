@@ -60,7 +60,6 @@ To compile the generated code, add the [Lightbend Config](https://github.com/lig
 ## Build the plugin yourself
 * `git clone https://github.com/timvlaer/tscfg-maven-plugin.git`
 * `cd tscfg-maven-plugin`
-* `git checkout develop`
 * `mvn clean install`
 
-Configure your pom to depend on version `0.9.0-SNAPSHOT` of the plugin.
+Configure your pom to depend on version `1.0.0-SNAPSHOT` of the plugin.
