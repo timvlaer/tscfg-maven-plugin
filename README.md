@@ -14,7 +14,7 @@ This plugin takes a configuration file (templateFile) and generates objects to h
 <plugin>
     <groupId>com.github.timvlaer</groupId>
     <artifactId>tscfg-maven-plugin</artifactId>
-    <version>0.8.2</version>
+    <version>1.0.0</version>
     <configuration>
         <templateFile>config-spec/service.spec.conf</templateFile>
         <packageName>com.sentiance.service.config</packageName>
@@ -61,6 +61,6 @@ Open a ticket or PR if you'd like to change the above.
 ## Build the plugin yourself
 * `git clone https://github.com/timvlaer/tscfg-maven-plugin.git`
 * `cd tscfg-maven-plugin`
+* Update the `<version>` in the pom.xml file, e.g. `2.0.0-custom-SNAPSHOT` 
 * `mvn clean install`
-
-Configure your pom to depend on version `1.0.0-SNAPSHOT` of the plugin.
+* Configure your project's pom to depend on your version of the plugin (e.g. `2.0.0-custom-SNAPSHOT`.)
