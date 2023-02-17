@@ -54,8 +54,7 @@ public class TscfgJavaGeneratorMojoTest {
     assertThat(resultFile).exists();
 
     String result = new String(Files.readAllBytes(resultFile), UTF_8);
-    assertThat(result).contains("package com.test.config;");
-    assertThat(result).contains("public class TestConfig {");
+    assertThat(result).contains("package com.test.config;").contains("public class TestConfig {");
   }
 
   @Test
@@ -71,9 +70,7 @@ public class TscfgJavaGeneratorMojoTest {
     mojo.setGenerateGetters(true);
 
     String result = executeMojo();
-    assertThat(result).contains("int getPort()");
-    assertThat(result).contains("String getServer()");
-    assertThat(result).contains("long getLength()");
+    assertThat(result).contains("int getPort()").contains("String getServer()").contains("long getLength()");
   }
 
   @Test
@@ -81,8 +78,7 @@ public class TscfgJavaGeneratorMojoTest {
     mojo.setGenerateRecords(true);
 
     String result = executeMojo();
-    assertThat(result).contains("public record TestConfig(");
-    assertThat(result).contains("public static record Test(");
+    assertThat(result).contains("public record TestConfig(").contains("public static record Test(");
   }
 
   @Test
