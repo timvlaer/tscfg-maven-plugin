@@ -2,46 +2,45 @@ package tscfg;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
 import static java.nio.file.StandardOpenOption.*;
 import static org.assertj.core.api.Assertions.*;
 import static tscfg.TscfgJavaGeneratorMojo.UTF_8;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class TscfgJavaGeneratorMojoTest {
 
   private TscfgJavaGeneratorMojo mojo = new TscfgJavaGeneratorMojo();
 
-  @Rule
-  public TemporaryFolder templateFolder = new TemporaryFolder();
-  @Rule
-  public TemporaryFolder outputFolder = new TemporaryFolder();
+  @TempDir
+  public Path templateFolder;
+  @TempDir
+  public Path outputFolder;
 
   @Mock
   private MavenProject project;
 
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     mojo.setProject(project);
 
-    File templateFile = templateFolder.newFile("test.spec.conf");
-    Files.write(templateFile.toPath(), templateContent(), CREATE, WRITE, TRUNCATE_EXISTING);
-    mojo.setTemplateFile(templateFile);
+    Path templateFile = templateFolder.resolve("test.spec.conf");
+    Files.write(templateFile, templateContent(), CREATE, WRITE, TRUNCATE_EXISTING);
+    mojo.setTemplateFile(templateFile.toFile());
 
-    mojo.setOutputDirectory(outputFolder.getRoot().getAbsolutePath());
+    mojo.setOutputDirectory(outputFolder.toString());
     mojo.setClassName("TestConfig");
     mojo.setPackageName("com.test.config");
   }
@@ -50,19 +49,19 @@ public class TscfgJavaGeneratorMojoTest {
   public void execute() throws Exception {
     mojo.execute();
 
-    Mockito.verify(project).addCompileSourceRoot(outputFolder.getRoot().getAbsolutePath());
+    Mockito.verify(project).addCompileSourceRoot(outputFolder.toString());
 
-    File resultFile = new File(outputFolder.getRoot(), "com/test/config/TestConfig.java");
+    Path resultFile = outputFolder.resolve("com").resolve("test").resolve("config").resolve("TestConfig.java");
     assertThat(resultFile).exists();
 
-    String result = new String(Files.readAllBytes(resultFile.toPath()), UTF_8);
+    String result = new String(Files.readAllBytes(resultFile), UTF_8);
     assertThat(result).contains("package com.test.config;");
     assertThat(result).contains("public class TestConfig {");
   }
 
   @Test
   public void executeFailsIfTemplateFileDoesNotExist() throws MojoExecutionException {
-    mojo.setTemplateFile(new File(templateFolder.getRoot(), "unexisting.conf"));
+    mojo.setTemplateFile(templateFolder.resolve("unexisting.conf").toFile());
     assertThatExceptionOfType(MojoExecutionException.class)
         .isThrownBy(mojo::execute)
         .withMessageContaining("Failed to read template file");
@@ -107,12 +106,12 @@ public class TscfgJavaGeneratorMojoTest {
   public void executeFullyOverwritesGeneratedFile() throws Exception {
     mojo.execute();
 
-    File resultFile = new File(outputFolder.getRoot(), "com/test/config/TestConfig.java");
-    Files.write(resultFile.toPath(), "extra".getBytes(UTF_8), StandardOpenOption.APPEND);
+    Path resultFile = outputFolder.resolve("com").resolve("test").resolve("config").resolve("TestConfig.java");
+    Files.write(resultFile, "extra".getBytes(UTF_8), StandardOpenOption.APPEND);
 
     mojo.execute();
 
-    String result = new String(Files.readAllBytes(resultFile.toPath()), UTF_8);
+    String result = new String(Files.readAllBytes(resultFile), UTF_8);
     assertThat(result).doesNotContain("extra");
   }
 
@@ -120,8 +119,8 @@ public class TscfgJavaGeneratorMojoTest {
   public void executeFailsIfGeneratedCodeCannotBeWritten() throws Exception {
     mojo.execute();
 
-    File resultFile = new File(outputFolder.getRoot(), "com/test/config/TestConfig.java");
-    assertThat(resultFile.setWritable(false)).isTrue();
+    Path resultFile = outputFolder.resolve("com").resolve("test").resolve("config").resolve("TestConfig.java");
+    assertThat(resultFile.toFile().setWritable(false)).isTrue();
     assertThatExceptionOfType(MojoExecutionException.class)
         .isThrownBy(mojo::execute)
         .withMessageContaining("Failed to write file");
@@ -129,7 +128,7 @@ public class TscfgJavaGeneratorMojoTest {
 
   @Test
   public void templateFileDoesNotExists() throws Exception {
-    mojo.setTemplateFile(new File(outputFolder.getRoot(), "unexisting.spec.conf"));
+    mojo.setTemplateFile(outputFolder.resolve("unexisting.spec.conf").toFile());
     assertThatExceptionOfType(MojoExecutionException.class)
         .isThrownBy(mojo::execute)
         .withMessageContaining("Failed to read template file (")
@@ -148,10 +147,10 @@ public class TscfgJavaGeneratorMojoTest {
   private String executeMojo() throws MojoExecutionException, IOException {
     mojo.execute();
 
-    File resultFile = new File(outputFolder.getRoot(), "com/test/config/TestConfig.java");
+    Path resultFile = outputFolder.resolve("com").resolve("test").resolve("config").resolve("TestConfig.java");
     assertThat(resultFile).exists();
 
-    return new String(Files.readAllBytes(resultFile.toPath()), UTF_8);
+    return new String(Files.readAllBytes(resultFile), UTF_8);
   }
 
 }
