@@ -91,7 +91,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
   private String readTscfgTemplate(File templateFile) throws MojoExecutionException {
     try {
-      return Files.readString(templateFile.toPath(), UTF_8);
+      return new String(Files.readAllBytes(templateFile.toPath()), UTF_8);
     } catch (IOException e) {
       throw new MojoExecutionException("Failed to read template file (" + templateFile + "): " + e.getClass() + ": " + e.getMessage());
     }
