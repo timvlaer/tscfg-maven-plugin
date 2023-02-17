@@ -34,18 +34,20 @@
   </scm>
 
   <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+    <java.version>8</java.version>
     <maven.version>3.9.0</maven.version>
+    <maven.prerequisite>3.6.3</maven.prerequisite>
 
     <tscfg.version>1.0.2</tscfg.version>
   </properties>
 
   <prerequisites>
-    <maven>3.6.3</maven>
+    <maven>${maven.prerequisite}</maven>
   </prerequisites>
 
   <dependencies>
@@ -203,6 +205,30 @@
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <version>3.2.1</version>
+        <configuration>
+          <rules>
+            <requireJavaVersion>
+              <version>${java.version}</version>
+            </requireJavaVersion>
+            <requireMavenVersion>
+              <version>${maven.prerequisite}</version>
+            </requireMavenVersion>
+          </rules>
+        </configuration>
+        <executions>
+          <execution>
+            <id>enforce</id>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-gpg-plugin</artifactId>
         <version>3.0.1</version>
       </plugin>
@@ -263,7 +289,7 @@
         <jdk>[9,)</jdk>
       </activation>
       <properties>
-        <maven.compiler.release>8</maven.compiler.release>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
       </properties>
     </profile>
 
