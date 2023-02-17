@@ -53,8 +53,9 @@ public class TscfgJavaGeneratorMojoTest {
     Path resultFile = outputFolder.resolve("com").resolve("test").resolve("config").resolve("TestConfig.java");
     assertThat(resultFile).exists();
 
-    String result = new String(Files.readAllBytes(resultFile), UTF_8);
-    assertThat(result).contains("package com.test.config;").contains("public class TestConfig {");
+    assertThat(contentOf(resultFile.toFile(), UTF_8))
+        .contains("package com.test.config;")
+        .contains("public class TestConfig {");
   }
 
   @Test
@@ -69,32 +70,39 @@ public class TscfgJavaGeneratorMojoTest {
   public void generateGetters() throws Exception {
     mojo.setGenerateGetters(true);
 
-    String result = executeMojo();
-    assertThat(result).contains("int getPort()").contains("String getServer()").contains("long getLength()");
+    Path resultFile = executeMojo();
+    assertThat(contentOf(resultFile.toFile(), UTF_8))
+        .contains("int getPort()")
+        .contains("String getServer()")
+        .contains("long getLength()");
   }
 
   @Test
   public void generateRecords() throws Exception {
     mojo.setGenerateRecords(true);
 
-    String result = executeMojo();
-    assertThat(result).contains("public record TestConfig(").contains("public static record Test(");
+    Path resultFile = executeMojo();
+    assertThat(contentOf(resultFile.toFile(), UTF_8))
+        .contains("public record TestConfig(")
+        .contains("public static record Test(");
   }
 
   @Test
   public void useOptionals() throws Exception {
     mojo.setUseOptionals(true);
 
-    String result = executeMojo();
-    assertThat(result).contains("java.util.Optional<java.lang.String> server");
+    Path resultFile = executeMojo();
+    assertThat(contentOf(resultFile.toFile(), UTF_8))
+        .contains("java.util.Optional<java.lang.String> server");
   }
 
   @Test
   public void useDurations() throws Exception {
     mojo.setUseDurations(true);
 
-    String result = executeMojo();
-    assertThat(result).contains("public final java.time.Duration length;");
+    Path resultFile = executeMojo();
+    assertThat(contentOf(resultFile.toFile(), UTF_8))
+        .contains("public final java.time.Duration length;");
   }
 
   @Test
@@ -106,8 +114,8 @@ public class TscfgJavaGeneratorMojoTest {
 
     mojo.execute();
 
-    String result = new String(Files.readAllBytes(resultFile), UTF_8);
-    assertThat(result).doesNotContain("extra");
+    assertThat(contentOf(resultFile.toFile(), UTF_8))
+        .doesNotContain("extra");
   }
 
   @Test
@@ -139,13 +147,13 @@ public class TscfgJavaGeneratorMojoTest {
     return templateConfig.getBytes(UTF_8);
   }
 
-  private String executeMojo() throws MojoExecutionException, IOException {
+  private Path executeMojo() throws MojoExecutionException, IOException {
     mojo.execute();
 
     Path resultFile = outputFolder.resolve("com").resolve("test").resolve("config").resolve("TestConfig.java");
     assertThat(resultFile).exists();
 
-    return new String(Files.readAllBytes(resultFile), UTF_8);
+    return resultFile;
   }
 
 }
