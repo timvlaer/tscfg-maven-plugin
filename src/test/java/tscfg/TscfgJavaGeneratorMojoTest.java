@@ -5,7 +5,6 @@ import org.apache.maven.project.MavenProject;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -19,6 +18,7 @@ import java.nio.file.StandardOpenOption;
 
 import static java.nio.file.StandardOpenOption.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static tscfg.TscfgJavaGeneratorMojo.UTF_8;
 
@@ -31,8 +31,6 @@ public class TscfgJavaGeneratorMojoTest {
   public TemporaryFolder templateFolder = new TemporaryFolder();
   @Rule
   public TemporaryFolder outputFolder = new TemporaryFolder();
-  @Rule
-  public ExpectedException expectedException = ExpectedException.none();
 
   @Mock
   private MavenProject project;
@@ -66,11 +64,9 @@ public class TscfgJavaGeneratorMojoTest {
 
   @Test
   public void executeFailsIfTemplateFileDoesNotExist() throws MojoExecutionException {
-    expectedException.expect(MojoExecutionException.class);
-    expectedException.expectMessage("Failed to read template file");
-
     mojo.setTemplateFile(new File(templateFolder.getRoot(), "unexisting.conf"));
-    mojo.execute();
+    MojoExecutionException e = assertThrows(MojoExecutionException.class, mojo::execute);
+    assertTrue(e.getMessage().contains("Failed to read template file"));
   }
 
   @Test
@@ -125,22 +121,18 @@ public class TscfgJavaGeneratorMojoTest {
   public void executeFailsIfGeneratedCodeCannotBeWritten() throws Exception {
     mojo.execute();
 
-    expectedException.expect(MojoExecutionException.class);
-    expectedException.expectMessage("Failed to write file");
-
     File resultFile = new File(outputFolder.getRoot(), "com/test/config/TestConfig.java");
     assertTrue(resultFile.setWritable(false));
-    mojo.execute();
+    MojoExecutionException e = assertThrows(MojoExecutionException.class, mojo::execute);
+    assertTrue(e.getMessage().contains("Failed to write file"));
   }
 
   @Test
   public void templateFileDoesNotExists() throws Exception {
-    expectedException.expect(MojoExecutionException.class);
-    expectedException.expectMessage("Failed to read template file (");
-    expectedException.expectMessage("unexisting.spec.conf):");
-
     mojo.setTemplateFile(new File(outputFolder.getRoot(), "unexisting.spec.conf"));
-    mojo.execute();
+    MojoExecutionException e = assertThrows(MojoExecutionException.class, mojo::execute);
+    assertTrue(e.getMessage().contains("Failed to read template file ("));
+    assertTrue(e.getMessage().contains("unexisting.spec.conf):"));
   }
 
   private byte[] templateContent() {
