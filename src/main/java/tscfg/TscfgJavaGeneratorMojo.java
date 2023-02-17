@@ -93,7 +93,8 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
     try {
       return new String(Files.readAllBytes(templateFile.toPath()), UTF_8);
     } catch (IOException e) {
-      throw new MojoExecutionException("Failed to read template file (" + templateFile + "): " + e.getClass() + ": " + e.getMessage());
+      throw new MojoExecutionException("Failed to read template file (" + templateFile + "): " +
+          e.getClass() + ": " + e.getMessage(), e);
     }
   }
 
@@ -105,7 +106,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
       getLog().debug("Wrote generated java config file to " + javaClassFile);
     } catch (IOException e) {
       throw new MojoExecutionException("Failed to write file (" + javaClassFile + "). " +
-          e.getClass() + ": " + e.getMessage());
+          e.getClass() + ": " + e.getMessage(), e);
     }
   }
 
