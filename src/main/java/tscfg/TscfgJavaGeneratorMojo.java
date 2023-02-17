@@ -59,6 +59,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   @Parameter(defaultValue = "false")
   private boolean allRequired;
 
+  @Override
   public void execute() throws MojoExecutionException {
     GenResult generatorResult = generateJavaCodeForTemplate(templateFile);
     writeGeneratedCodeToJavaFile(generatorResult.code());
