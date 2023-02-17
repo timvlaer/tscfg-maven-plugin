@@ -13,7 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardOpenOption;
 
 import static java.nio.file.StandardOpenOption.*;
 import static org.assertj.core.api.Assertions.*;
@@ -107,7 +106,7 @@ public class TscfgJavaGeneratorMojoTest {
     mojo.execute();
 
     Path resultFile = outputFolder.resolve("com").resolve("test").resolve("config").resolve("TestConfig.java");
-    Files.write(resultFile, "extra".getBytes(UTF_8), StandardOpenOption.APPEND);
+    Files.write(resultFile, "extra".getBytes(UTF_8), APPEND);
 
     mojo.execute();
 
