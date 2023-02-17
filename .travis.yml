@@ -1,6 +1,6 @@
 language: java
 sudo: false
-script: mvn verify -P !build-extras -B
+script: mvn verify -B
 
 cache:
   directories:
