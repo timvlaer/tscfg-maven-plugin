@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.*;
 import static org.assertj.core.api.Assertions.*;
-import static tscfg.TscfgJavaGeneratorMojo.UTF_8;
 
 @ExtendWith(MockitoExtension.class)
 public class TscfgJavaGeneratorMojoTest {

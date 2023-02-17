@@ -15,18 +15,17 @@ import tscfg.ns.NamespaceMan;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.*;
 
 @Mojo(name = "generate-config-class", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 @Execute(phase = LifecyclePhase.GENERATE_SOURCES, goal = "generate-config-class")
 public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
-  static final Charset UTF_8 = Charset.forName("UTF-8");
   private static final String PACKAGE_SEPARATOR = ".";
   private static final String JAVA_FILE_EXTENSION = ".java";
 
