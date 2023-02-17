@@ -39,7 +39,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <maven.version>3.6.3</maven.version>
+    <maven.version>3.9.0</maven.version>
 
     <tscfg.version>1.0.2</tscfg.version>
   </properties>
@@ -54,7 +54,7 @@
     <dependency>
       <groupId>org.apache.maven.plugin-tools</groupId>
       <artifactId>maven-plugin-annotations</artifactId>
-      <version>3.5.2</version>
+      <version>3.7.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -98,7 +98,7 @@
     <dependency>
       <groupId>org.apache.maven.shared</groupId>
       <artifactId>maven-verifier</artifactId>
-      <version>1.6</version>
+      <version>1.8.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -108,7 +108,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
+        <version>3.10.1</version>
         <configuration>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
@@ -122,13 +122,13 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.6.1</version>
+        <version>3.7.1</version>
       </plugin>
 
       <plugin>
         <groupId>org.sonatype.plugins</groupId>
         <artifactId>nexus-staging-maven-plugin</artifactId>
-        <version>1.6.8</version>
+        <version>1.6.13</version>
         <extensions>true</extensions>
         <configuration>
           <serverId>ossrh</serverId>
@@ -139,13 +139,24 @@
 
       <plugin>
         <artifactId>maven-invoker-plugin</artifactId>
-        <version>3.4.0</version>
+        <version>3.5.0</version>
         <configuration>
           <goals>
-            <goal>install</goal>
+            <goal>compile</goal>
           </goals>
           <postBuildHookScript>verify</postBuildHookScript>
           <addTestClassPath>true</addTestClassPath>
+          <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
+          <extraArtifacts>
+            <extraArtifact>org.scala-lang:scala-library:2.13.8:pom</extraArtifact>
+            <extraArtifact>org.scala-lang:scala-library:2.13.5:pom</extraArtifact>
+            <extraArtifact>org.scala-lang.modules:scala-collection-compat_2.13:2.4.4:pom</extraArtifact>
+            <extraArtifact>org.apache.maven.plugins:maven-resources-plugin:3.3.0:maven-plugin</extraArtifact>
+            <extraArtifact>org.junit:junit-bom:5.7.2:pom</extraArtifact>
+            <extraArtifact>org.junit:junit-bom:5.7.1:pom</extraArtifact>
+            <extraArtifact>org.apache.maven.plugins:maven-compiler-plugin:3.10.1:maven-plugin</extraArtifact>
+            <extraArtifact>org.junit:junit-bom:5.8.2:pom</extraArtifact>
+          </extraArtifacts>
         </configuration>
         <executions>
           <execution>
@@ -189,7 +200,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
+            <version>3.0.1</version>
             <executions>
               <execution>
                 <id>sign-artifacts</id>
@@ -214,7 +225,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.0.1</version>
+            <version>3.2.1</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -227,7 +238,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>3.2.0</version>
+            <version>3.5.0</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
