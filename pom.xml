@@ -5,7 +5,7 @@
 
   <groupId>com.github.timvlaer</groupId>
   <artifactId>tscfg-maven-plugin</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.2</version>
   <packaging>maven-plugin</packaging>
 
   <name>tscfg Maven Plugin</name>
@@ -36,7 +36,7 @@
   <properties>
     <maven.version>3.6.3</maven.version>
 
-    <tscfg.version>0.9.981</tscfg.version>
+    <tscfg.version>1.0.2</tscfg.version>
   </properties>
 
   <dependencies>
@@ -113,7 +113,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-plugin-plugin</artifactId>
-        <version>3.6.0</version>
+        <version>3.6.1</version>
       </plugin>
 
       <plugin>

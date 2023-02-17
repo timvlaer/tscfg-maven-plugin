@@ -11,6 +11,7 @@ import tscfg.generators.GenOpts;
 import tscfg.generators.GenResult;
 import tscfg.generators.Generator;
 import tscfg.generators.java.JavaGen;
+import tscfg.ns.NamespaceMan;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,6 +49,9 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   private boolean generateGetters;
 
   @Parameter(defaultValue = "false")
+  private boolean generateRecords;
+
+  @Parameter(defaultValue = "false")
   private boolean useOptionals;
 
   @Parameter(defaultValue = "true")
@@ -76,11 +80,13 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
         generateScala12Code,
         useBackticks,
         generateGetters,
+        generateRecords,
         useOptionals,
         useDurations
     );
-    Generator tscfgGenerator = new JavaGen(genOpts);
-    return tscfgGenerator.generate(ModelBuilder.apply(readTscfgTemplate(templateFile), allRequired).objectType());
+    NamespaceMan rootNamespace = new NamespaceMan();
+    Generator tscfgGenerator = new JavaGen(genOpts, rootNamespace);
+    return tscfgGenerator.generate(ModelBuilder.apply(rootNamespace, readTscfgTemplate(templateFile), allRequired).objectType());
   }
 
   private String readTscfgTemplate(File templateFile) throws MojoExecutionException {
@@ -138,6 +144,10 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
   void setGenerateGetters(boolean generateGetters) {
     this.generateGetters = generateGetters;
+  }
+
+  void setGenerateRecords(boolean generateRecords) {
+    this.generateRecords = generateRecords;
   }
 
   void setUseOptionals(boolean useOptionals) {

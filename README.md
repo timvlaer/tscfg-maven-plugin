@@ -14,12 +14,13 @@ This plugin takes a configuration file (templateFile) and generates objects to h
 <plugin>
     <groupId>com.github.timvlaer</groupId>
     <artifactId>tscfg-maven-plugin</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.2</version>
     <configuration>
         <templateFile>config-spec/service.spec.conf</templateFile>
         <packageName>com.sentiance.service.config</packageName>
         <className>ServiceConfig</className>
         <generateGetters>true</generateGetters>
+        <generateRecords>false</generateRecords>
         <useOptionals>false</useOptionals>
         <useDurations>true</useDurations>
     </configuration>
@@ -39,7 +40,7 @@ To compile the generated code, add the [Lightbend Config](https://github.com/lig
 <dependency>
     <groupId>com.typesafe</groupId>
     <artifactId>config</artifactId>
-    <version>1.3.4</version>
+    <version>1.4.2</version>
 </dependency>
 ```
 
@@ -49,6 +50,7 @@ To compile the generated code, add the [Lightbend Config](https://github.com/lig
 * packageName: the package of the generated config class
 * outputDirectory: the output directory for the generated class, default is `target/generated-sources/tscfg/`
 * generateGetters: (true|false) generate getters for configuration
+* generateRecords: (true|false) generate records for configuration
 * useOptionals: (true|false) use java8 Optional object for optional fields
 * useDurations: (true|false) if true, properties of type `duration` will be of type `java.time.Duration` in the generated code. If false, it will be a long.
 * allRequired: (true|false) if true, optional tags are ignored and every property in the config file is required. Defaults to false.

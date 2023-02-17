@@ -84,6 +84,15 @@ public class TscfgJavaGeneratorMojoTest {
   }
 
   @Test
+  public void generateRecords() throws Exception {
+    mojo.setGenerateRecords(true);
+
+    String result = executeMojo();
+    assertThat(result).contains("public record TestConfig(");
+    assertThat(result).contains("public static record Test(");
+  }
+
+  @Test
   public void useOptionals() throws Exception {
     mojo.setUseOptionals(true);
 
