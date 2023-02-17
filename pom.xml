@@ -44,6 +44,10 @@
     <tscfg.version>1.0.2</tscfg.version>
   </properties>
 
+  <prerequisites>
+    <maven>3.6.3</maven>
+  </prerequisites>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>
