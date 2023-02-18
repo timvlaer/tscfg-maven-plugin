@@ -4,7 +4,7 @@
 
 # tscfg-maven-plugin
 
-Maven plugin that generates the boiler-plate for a [Typesafe Config](https://github.com/typesafehub/config) properties file
+Maven plugin that generates the boiler-plate for a [Typesafe Config](https://github.com/lightbend/config) properties file
 using the excellent [tscfg](https://github.com/carueda/tscfg) library by @carueda.
 
 This plugin takes a configuration file (templateFile) and generates objects to hold your configuration.
@@ -35,7 +35,7 @@ This plugin takes a configuration file (templateFile) and generates objects to h
 </plugin>
 ```
 
-To compile the generated code, add the [Lightbend Config](https://github.com/lightbend/config) dependency to your project:
+To compile the generated code, add the [Typesafe Config](https://github.com/lightbend/config) dependency to your project:
 ```xml
 <dependency>
     <groupId>com.typesafe</groupId>
