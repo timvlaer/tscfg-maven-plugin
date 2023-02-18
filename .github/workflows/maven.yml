@@ -1,0 +1,51 @@
+name: Java CI with Maven
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
+      - '.gitignore'
+      - '.travis.yml'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - '**.txt'
+      - '.gitignore'
+      - '.travis.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        java:
+          - '8'
+          - '11'
+          - '17'
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.java }}-maven-
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'zulu'
+          check-latest: true
+      - run: mvn -B -V --file pom.xml
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.os }}-java-${{ matrix.java }}
+          path: |
+            **/target/*.jar
+            **/target/invoker-reports/
+            **/target/its/**/build.log
+            **/target/site/
+            **/target/surefire-reports/
+        if: always()
