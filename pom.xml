@@ -67,8 +67,8 @@
     </dependency>
     <dependency>
       <groupId>org.apache.maven</groupId>
-      <artifactId>maven-project</artifactId>
-      <version>2.2.1</version>
+      <artifactId>maven-core</artifactId>
+      <version>${maven.version}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -97,12 +97,6 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>org.apache.maven</groupId>
-      <artifactId>maven-core</artifactId>
-      <version>${maven.version}</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>org.apache.maven.shared</groupId>
       <artifactId>maven-verifier</artifactId>
@@ -205,6 +199,14 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.5.0</version>
+        <configuration>
+          <doclint>all</doclint>
+          <quiet>true</quiet>
+          <links>
+            <link>https://maven.apache.org/ref/${maven.version}/maven-plugin-api/apidocs/</link>
+            <link>https://maven.apache.org/plugin-tools/apidocs/</link>
+          </links>
+        </configuration>
         <executions>
           <execution>
             <id>attach-javadocs</id>

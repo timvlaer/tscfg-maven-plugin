@@ -22,6 +22,10 @@ import java.nio.file.Paths;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.*;
 
+/**
+ * Maven plugin that generates the boiler-plate Java code for a <a href="https://github.com/lightbend/config">Typesafe Config</a> properties file
+ * using <a href="https://github.com/carueda/tscfg">tscfg</a>.
+ */
 @Mojo(name = "generate-config-class", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 @Execute(phase = LifecyclePhase.GENERATE_SOURCES, goal = "generate-config-class")
 public class TscfgJavaGeneratorMojo extends AbstractMojo {
@@ -29,36 +33,89 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   private static final String PACKAGE_SEPARATOR = ".";
   private static final String JAVA_FILE_EXTENSION = ".java";
 
+  /**
+   * The Typesafe configuration template file.
+   */
   @Parameter(required = true)
   private File templateFile;
 
+  /**
+   * The package of the generated config class.
+   */
   @Parameter(required = true)
   private String packageName;
 
+  /**
+   * The name of the generated config class.
+   */
   @Parameter(required = true)
   private String className;
 
+  /**
+   * The output directory for the generated class.
+   */
   @Parameter(defaultValue = "${project.build.directory}/generated-sources/tscfg/")
   private String outputDirectory;
 
+  /**
+   * The maven project being built.
+   */
   @Parameter(defaultValue = "${project}", required = true, readonly = true)
   private MavenProject project;
 
+  /**
+   * Generate getters for configuration?
+   *
+   * @since 0.3.0
+   */
   @Parameter(defaultValue = "false")
   private boolean generateGetters;
 
+  /**
+   * Generate records for configuration?
+   *
+   * @since 1.0.2
+   */
   @Parameter(defaultValue = "false")
   private boolean generateRecords;
 
+  /**
+   * Use {@link java.util.Optional} for optional fields?
+   *
+   * @since 0.6.0
+   */
   @Parameter(defaultValue = "false")
   private boolean useOptionals;
 
+  /**
+   * Use {@link java.time.Duration} for duration fields?
+   *
+   * @since 0.6.0
+   */
   @Parameter(defaultValue = "true")
   private boolean useDurations;
 
+  /**
+   * Optional tags are ignored and every property in the config file is required?
+   *
+   * @since 0.7.0
+   */
   @Parameter(defaultValue = "false")
   private boolean allRequired;
 
+  /**
+   * Construct a new instance.
+   */
+  public TscfgJavaGeneratorMojo() {
+    super();
+  }
+
+  /**
+   * Generate the boiler-plate Java code for a <a href="https://github.com/lightbend/config">Typesafe Config</a> properties file
+   * using <a href="https://github.com/carueda/tscfg">tscfg</a>.
+   *
+   * @throws MojoExecutionException if execution fails.
+   */
   @Override
   public void execute() throws MojoExecutionException {
     GenResult generatorResult = generateJavaCodeForTemplate(templateFile);
@@ -68,6 +125,13 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
     project.addCompileSourceRoot(outputDirectory);
   }
 
+  /**
+   * Generate Java code based on the Typesafe configuration template file.
+   *
+   * @param templateFile the template configuration file.
+   * @return the Java code generator result.
+   * @throws MojoExecutionException if the Java code generation fails.
+   */
   private GenResult generateJavaCodeForTemplate(File templateFile) throws MojoExecutionException {
     boolean useBackticks = false;
     boolean generateJava7Code = false;
@@ -89,6 +153,13 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
     return tscfgGenerator.generate(ModelBuilder.apply(rootNamespace, readTscfgTemplate(templateFile), allRequired).objectType());
   }
 
+  /**
+   * Read a Typesafe configuration template file.
+   *
+   * @param templateFile the Typesafe configuration template file.
+   * @return the Typesafe configuration template.
+   * @throws MojoExecutionException if the Typesafe configuration template file could not be read.
+   */
   private String readTscfgTemplate(File templateFile) throws MojoExecutionException {
     try {
       return new String(Files.readAllBytes(templateFile.toPath()), UTF_8);
@@ -98,6 +169,12 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
     }
   }
 
+  /**
+   * Write the generated Java class code to a file.
+   *
+   * @param javaClassCode the generated Java code.
+   * @throws MojoExecutionException if the generated Java class code could not be written to a file.
+   */
   private void writeGeneratedCodeToJavaFile(String javaClassCode) throws MojoExecutionException {
     Path javaClassFile = assembleJavaFilePath();
     try {
@@ -110,12 +187,23 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
     }
   }
 
+  /**
+   * Construct the file path for the generated Java class code.
+   *
+   * @return the file path for the generated Java class code.
+   */
   private Path assembleJavaFilePath() {
     String packageDirectoryPath = packageName.replace(PACKAGE_SEPARATOR, File.separator);
     String javaFileName = className + JAVA_FILE_EXTENSION;
     return Paths.get(outputDirectory, packageDirectoryPath, javaFileName);
   }
 
+  /**
+   * Create parent directories if necessary for a file path.
+   *
+   * @param outputFile the file path.
+   * @throws IOException if the parent directories could not be created.
+   */
   private void createParentDirsIfNecessary(Path outputFile) throws IOException {
     Path parentDir = outputFile.getParent();
     if (!Files.exists(parentDir)) {
