@@ -44,6 +44,7 @@ jobs:
           name: ${{ runner.os }}-java-${{ matrix.java }}
           path: |
             **/target/*.jar
+            **/target/bom.*
             **/target/invoker-reports/
             **/target/its/**/build.log
             **/target/site/
