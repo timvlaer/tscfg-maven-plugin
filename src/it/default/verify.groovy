@@ -11,4 +11,7 @@ assertThat(contentOf(generatedClass, UTF_8))
         .contains("int getProperty3()")
         .contains("Duration getProperty4()")
 
+def compiledClass = new File((File) basedir, "target/classes/com/github/timvlaer/generated/config/TestConfig.class")
+assertThat(compiledClass).exists()
+
 return true
