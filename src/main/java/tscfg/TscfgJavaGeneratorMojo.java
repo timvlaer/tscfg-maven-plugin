@@ -36,25 +36,25 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   /**
    * The Typesafe configuration template file.
    */
-  @Parameter(required = true)
+  @Parameter(property = "tscfg.templateFile", required = true)
   private File templateFile;
 
   /**
    * The package of the generated config class.
    */
-  @Parameter(required = true)
+  @Parameter(property = "tscfg.packageName", required = true)
   private String packageName;
 
   /**
    * The name of the generated config class.
    */
-  @Parameter(required = true)
+  @Parameter(property = "tscfg.className", required = true)
   private String className;
 
   /**
    * The output directory for the generated class.
    */
-  @Parameter(defaultValue = "${project.build.directory}/generated-sources/tscfg/")
+  @Parameter(property = "tscfg.outputDirectory", defaultValue = "${project.build.directory}/generated-sources/tscfg/")
   private String outputDirectory;
 
   /**
@@ -68,7 +68,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
    *
    * @since 0.3.0
    */
-  @Parameter(defaultValue = "false")
+  @Parameter(property = "tscfg.generateGetters", defaultValue = "false")
   private boolean generateGetters;
 
   /**
@@ -76,7 +76,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
    *
    * @since 1.0.2
    */
-  @Parameter(defaultValue = "false")
+  @Parameter(property = "tscfg.generateRecords", defaultValue = "false")
   private boolean generateRecords;
 
   /**
@@ -84,7 +84,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
    *
    * @since 0.6.0
    */
-  @Parameter(defaultValue = "false")
+  @Parameter(property = "tscfg.useOptionals", defaultValue = "false")
   private boolean useOptionals;
 
   /**
@@ -92,7 +92,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
    *
    * @since 0.6.0
    */
-  @Parameter(defaultValue = "true")
+  @Parameter(property = "tscfg.useDurations", defaultValue = "true")
   private boolean useDurations;
 
   /**
@@ -100,7 +100,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
    *
    * @since 0.7.0
    */
-  @Parameter(defaultValue = "false")
+  @Parameter(property = "tscfg.allRequired", defaultValue = "false")
   private boolean allRequired;
 
   /**
