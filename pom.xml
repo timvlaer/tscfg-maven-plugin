@@ -312,11 +312,56 @@
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
         <version>0.8.8</version>
+        <configuration>
+          <rules>
+            <rule>
+              <element>BUNDLE</element>
+              <limits>
+                <limit>
+                  <counter>INSTRUCTION</counter>
+                  <value>MISSEDCOUNT</value>
+                  <minimum>0</minimum>
+                </limit>
+                <limit>
+                  <counter>BRANCH</counter>
+                  <value>MISSEDCOUNT</value>
+                  <minimum>0</minimum>
+                </limit>
+                <limit>
+                  <counter>COMPLEXITY</counter>
+                  <value>MISSEDCOUNT</value>
+                  <minimum>0</minimum>
+                </limit>
+                <limit>
+                  <counter>LINE</counter>
+                  <value>MISSEDCOUNT</value>
+                  <minimum>0</minimum>
+                </limit>
+                <limit>
+                  <counter>METHOD</counter>
+                  <value>MISSEDCOUNT</value>
+                  <minimum>0</minimum>
+                </limit>
+                <limit>
+                  <counter>CLASS</counter>
+                  <value>MISSEDCOUNT</value>
+                  <minimum>0</minimum>
+                </limit>
+              </limits>
+            </rule>
+          </rules>
+        </configuration>
         <executions>
           <execution>
             <id>default-prepare-agent</id>
             <goals>
               <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>default-check</id>
+            <goals>
+              <goal>check</goal>
             </goals>
           </execution>
         </executions>
