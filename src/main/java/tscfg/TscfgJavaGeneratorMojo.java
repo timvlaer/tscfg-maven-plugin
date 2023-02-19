@@ -2,7 +2,6 @@ package tscfg;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugins.annotations.Execute;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -27,7 +26,6 @@ import static java.nio.file.StandardOpenOption.*;
  * using <a href="https://github.com/carueda/tscfg">tscfg</a>.
  */
 @Mojo(name = "generate-config-class", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
-@Execute(phase = LifecyclePhase.GENERATE_SOURCES, goal = "generate-config-class")
 public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
   private static final String PACKAGE_SEPARATOR = ".";
