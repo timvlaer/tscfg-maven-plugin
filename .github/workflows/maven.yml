@@ -38,7 +38,7 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'zulu'
           check-latest: true
-      - run: mvn -B -V --file pom.xml
+      - run: mvn -B -V verify site --file pom.xml
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }}-java-${{ matrix.java }}
