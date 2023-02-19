@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
@@ -17,6 +16,7 @@ import java.nio.file.Path;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TscfgJavaGeneratorMojoTest {
@@ -48,7 +48,7 @@ public class TscfgJavaGeneratorMojoTest {
   public void execute() throws Exception {
     mojo.execute();
 
-    Mockito.verify(project).addCompileSourceRoot(outputFolder.toString());
+    verify(project).addCompileSourceRoot(outputFolder.toString());
 
     Path resultFile = outputFolder.resolve("com").resolve("test").resolve("config").resolve("TestConfig.java");
     assertThat(resultFile).exists();
@@ -56,6 +56,17 @@ public class TscfgJavaGeneratorMojoTest {
     assertThat(contentOf(resultFile.toFile(), UTF_8))
         .contains("package com.test.config;")
         .contains("public class TestConfig {");
+  }
+
+  @Test
+  public void skip() throws Exception {
+    mojo.setSkip(true);
+    mojo.execute();
+
+    verify(project, never()).addCompileSourceRoot(any());
+
+    Path resultFile = outputFolder.resolve("com").resolve("test").resolve("config").resolve("TestConfig.java");
+    assertThat(resultFile).doesNotExist();
   }
 
   @Test

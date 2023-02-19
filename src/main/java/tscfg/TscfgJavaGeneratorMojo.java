@@ -64,6 +64,14 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   private MavenProject project;
 
   /**
+   * Skip plugin execution?
+   *
+   * @since 1.0.2
+   */
+  @Parameter(property = "tscfg.skip", defaultValue = "false")
+  private boolean skip;
+
+  /**
    * Generate getters for configuration?
    *
    * @since 0.3.0
@@ -118,6 +126,11 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
    */
   @Override
   public void execute() throws MojoExecutionException {
+    if (skip) {
+      getLog().info("Skipping tscfg");
+      return;
+    }
+
     GenResult generatorResult = generateJavaCodeForTemplate(templateFile);
     writeGeneratedCodeToJavaFile(generatorResult.code());
 
@@ -229,6 +242,10 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
   void setProject(MavenProject project) {
     this.project = project;
+  }
+
+  void setSkip(boolean skip) {
+    this.skip = skip;
   }
 
   void setGenerateGetters(boolean generateGetters) {
