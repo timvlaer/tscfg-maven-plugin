@@ -130,6 +130,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
     }
 
     GenResult generatorResult = generateJavaCodeForTemplate(templateFile);
+    getLog().debug("Generated java code for template file " + templateFile);
     writeGeneratedCodeToJavaFile(generatorResult.code());
 
     getLog().debug("Adding " + outputDirectory + " as source root in the maven project.");
@@ -173,7 +174,9 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
    */
   private String readTscfgTemplate(File templateFile) throws MojoExecutionException {
     try {
-      return new String(Files.readAllBytes(templateFile.toPath()), UTF_8);
+      String template = new String(Files.readAllBytes(templateFile.toPath()), UTF_8);
+      getLog().debug("Read template file " + templateFile);
+      return template;
     } catch (IOException e) {
       throw new MojoExecutionException("Failed to read template file (" + templateFile + "): " +
           e.getClass() + ": " + e.getMessage(), e);
@@ -219,6 +222,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
     Path parentDir = outputFile.getParent();
     if (!Files.exists(parentDir)) {
       Files.createDirectories(parentDir);
+      getLog().debug("Created parent dir " + parentDir);
     }
   }
 
