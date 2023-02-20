@@ -199,11 +199,8 @@
         <version>3.5.0</version>
         <configuration>
           <doclint>all</doclint>
+          <failOnWarnings>true</failOnWarnings>
           <quiet>true</quiet>
-          <links>
-            <link>https://maven.apache.org/ref/${maven.version}/maven-plugin-api/apidocs/</link>
-            <link>https://maven.apache.org/plugin-tools/apidocs/</link>
-          </links>
         </configuration>
         <executions>
           <execution>
@@ -420,11 +417,9 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <configuration>
+          <doclint>all</doclint>
+          <failOnWarnings>true</failOnWarnings>
           <quiet>true</quiet>
-          <links>
-            <link>https://maven.apache.org/ref/${maven.version}/maven-plugin-api/apidocs/</link>
-            <link>https://maven.apache.org/plugin-tools/maven-plugin-annotations/apidocs/</link>
-          </links>
         </configuration>
         <reportSets>
           <reportSet>
@@ -485,6 +480,54 @@
 
   <profiles>
     <profile>
+      <id>jdk8</id>
+      <activation>
+        <jdk>(,8]</jdk>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+              <offlineLinks>
+                <offlineLink>
+                  <url>https://maven.apache.org/ref/${maven.version}/maven-plugin-api/apidocs/</url>
+                  <location>${project.basedir}/src/javadoc/maven-plugin-api</location>
+                </offlineLink>
+                <offlineLink>
+                  <url>https://maven.apache.org/plugin-tools/apidocs/</url>
+                  <location>${project.basedir}/src/javadoc/plugin-tools</location>
+                </offlineLink>
+              </offlineLinks>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+              <offlineLinks>
+                <offlineLink>
+                  <url>https://maven.apache.org/ref/${maven.version}/maven-plugin-api/apidocs/</url>
+                  <location>${project.basedir}/src/javadoc/maven-plugin-api</location>
+                </offlineLink>
+                <offlineLink>
+                  <url>https://maven.apache.org/plugin-tools/apidocs/</url>
+                  <location>${project.basedir}/src/javadoc/plugin-tools</location>
+                </offlineLink>
+              </offlineLinks>
+            </configuration>
+          </plugin>
+        </plugins>
+      </reporting>
+    </profile>
+
+    <profile>
       <id>jdk9</id>
       <activation>
         <jdk>[9,)</jdk>
@@ -492,6 +535,36 @@
       <properties>
         <maven.compiler.release>${java.version}</maven.compiler.release>
       </properties>
+
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+              <links>
+                <link>https://maven.apache.org/ref/${maven.version}/maven-plugin-api/apidocs/</link>
+                <link>https://maven.apache.org/plugin-tools/apidocs/</link>
+              </links>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+
+      <reporting>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <configuration>
+              <links>
+                <link>https://maven.apache.org/ref/${maven.version}/maven-plugin-api/apidocs/</link>
+                <link>https://maven.apache.org/plugin-tools/apidocs/</link>
+              </links>
+            </configuration>
+          </plugin>
+        </plugins>
+      </reporting>
     </profile>
 
     <profile>
