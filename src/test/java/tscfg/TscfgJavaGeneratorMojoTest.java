@@ -1,7 +1,10 @@
 package tscfg;
 
+import org.apache.maven.monitor.logging.DefaultLog;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
+import org.codehaus.plexus.logging.console.ConsoleLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,12 +19,14 @@ import java.nio.file.Path;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.codehaus.plexus.logging.Logger.LEVEL_DISABLED;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TscfgJavaGeneratorMojoTest {
 
   private TscfgJavaGeneratorMojo mojo = new TscfgJavaGeneratorMojo();
+  private Log log = new DefaultLog(new ConsoleLogger(LEVEL_DISABLED, null));
 
   @TempDir
   public Path templateFolder;
@@ -34,6 +39,7 @@ public class TscfgJavaGeneratorMojoTest {
   @BeforeEach
   public void setUp() throws Exception {
     mojo.setProject(project);
+    mojo.setLog(log);
 
     Path templateFile = templateFolder.resolve("test.spec.conf");
     Files.write(templateFile, templateContent(), CREATE, WRITE, TRUNCATE_EXISTING);
