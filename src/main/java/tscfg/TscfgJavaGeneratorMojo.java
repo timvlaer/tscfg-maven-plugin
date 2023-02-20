@@ -28,9 +28,6 @@ import static java.nio.file.StandardOpenOption.*;
 @Mojo(name = "generate-config-class", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
-  private static final String PACKAGE_SEPARATOR = ".";
-  private static final String JAVA_FILE_EXTENSION = ".java";
-
   /**
    * The Typesafe configuration template file.
    */
@@ -52,8 +49,8 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
   /**
    * The output directory for the generated class.
    */
-  @Parameter(property = "tscfg.outputDirectory", defaultValue = "${project.build.directory}/generated-sources/tscfg/")
-  private String outputDirectory;
+  @Parameter(property = "tscfg.outputDirectory", defaultValue = "${project.build.directory}/generated-sources/tscfg")
+  private File outputDirectory;
 
   /**
    * The maven project being built.
@@ -134,7 +131,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
     writeGeneratedCodeToJavaFile(generatorResult.code());
 
     getLog().debug("Adding " + outputDirectory + " as source root in the maven project.");
-    project.addCompileSourceRoot(outputDirectory);
+    project.addCompileSourceRoot(outputDirectory.toString());
   }
 
   /**
@@ -206,10 +203,13 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
    *
    * @return the file path for the generated Java class code.
    */
+  @SuppressWarnings("StringSplitter")
   private Path assembleJavaFilePath() {
-    String packageDirectoryPath = packageName.replace(PACKAGE_SEPARATOR, File.separator);
-    String javaFileName = className + JAVA_FILE_EXTENSION;
-    return Paths.get(outputDirectory, packageDirectoryPath, javaFileName);
+    Path out = outputDirectory.toPath();
+    for (String p : packageName.split("[.]")) {
+      out = out.resolve(p);
+    }
+    return out.resolve(className + ".java");
   }
 
   /**
@@ -238,7 +238,7 @@ public class TscfgJavaGeneratorMojo extends AbstractMojo {
     this.className = className;
   }
 
-  void setOutputDirectory(String outputDirectory) {
+  void setOutputDirectory(File outputDirectory) {
     this.outputDirectory = outputDirectory;
   }
 

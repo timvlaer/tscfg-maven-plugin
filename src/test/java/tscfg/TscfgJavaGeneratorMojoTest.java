@@ -39,7 +39,7 @@ public class TscfgJavaGeneratorMojoTest {
     Files.write(templateFile, templateContent(), CREATE, WRITE, TRUNCATE_EXISTING);
     mojo.setTemplateFile(templateFile.toFile());
 
-    mojo.setOutputDirectory(outputFolder.toString());
+    mojo.setOutputDirectory(outputFolder.toFile());
     mojo.setClassName("TestConfig");
     mojo.setPackageName("com.test.config");
   }
