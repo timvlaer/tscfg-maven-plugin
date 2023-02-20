@@ -25,7 +25,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class TscfgJavaGeneratorMojoTest {
 
-  private TscfgJavaGeneratorMojo mojo = new TscfgJavaGeneratorMojo();
+  private TscfgJavaGeneratorMojo mojo;
   private Log log = new DefaultLog(new ConsoleLogger(LEVEL_DISABLED, null));
 
   @TempDir
@@ -38,6 +38,7 @@ public class TscfgJavaGeneratorMojoTest {
 
   @BeforeEach
   public void setUp() throws Exception {
+    mojo = new TscfgJavaGeneratorMojo();
     mojo.setProject(project);
     mojo.setLog(log);
 
