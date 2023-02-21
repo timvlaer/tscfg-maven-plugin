@@ -47,6 +47,7 @@ jobs:
         with:
           name: ${{ runner.os }}-java-${{ matrix.java }}
           path: |
+            **/.flattened-pom.xml
             **/target/*.jar
             **/target/bom.*
             **/target/invoker-reports/
