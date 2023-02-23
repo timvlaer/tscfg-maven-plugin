@@ -33,8 +33,10 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/cache@v3
         with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
+          path: |
+            ~/.m2/repository
+            ~/.m2/wrapper
+          key: ${{ runner.os }}-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml', '**/maven-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.java }}-maven-
       - uses: actions/setup-java@v3
@@ -42,7 +44,7 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: 'zulu'
           check-latest: true
-      - run: mvn -B -V verify site --file pom.xml
+      - run: ./mvnw -B -V verify site
       - uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }}-java-${{ matrix.java }}
