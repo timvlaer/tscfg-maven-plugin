@@ -17,6 +17,8 @@ on:
 
 jobs:
   build:
+    name: Build on ${{ matrix.os }} with Java ${{ matrix.java }} and Maven ${{ matrix.maven }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -28,26 +30,36 @@ jobs:
           - '8'
           - '11'
           - '17'
-    runs-on: ${{ matrix.os }}
+        maven:
+          - '3.6.3'
+          - '3.8.7'
+          - '3.9.0'
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cache local Maven repository
+        uses: actions/cache@v3
         with:
           path: |
             ~/.m2/repository
             ~/.m2/wrapper
-          key: ${{ runner.os }}-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml', '**/maven-wrapper.properties') }}
+          key: ${{ runner.os }}-java-${{ matrix.java }}-maven-${{ matrix.maven }}-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
-            ${{ runner.os }}-${{ matrix.java }}-maven-
-      - uses: actions/setup-java@v3
+            ${{ runner.os }}-java-${{ matrix.java }}-maven-${{ matrix.maven }}-
+      - name: Set up JDK
+        uses: actions/setup-java@v3
         with:
           java-version: ${{ matrix.java }}
           distribution: 'zulu'
           check-latest: true
-      - run: ./mvnw -B -V verify site
-      - uses: actions/upload-artifact@v3
+      - name: Set up Maven
+        run: mvn -B -V wrapper:wrapper "-Dmaven=${{ matrix.maven }}"
+      - name: Build with Maven
+        run: ./mvnw -B -V verify site
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
         with:
-          name: ${{ runner.os }}-java-${{ matrix.java }}
+          name: ${{ runner.os }}-java-${{ matrix.java }}-maven-${{ matrix.maven }}
           path: |
             **/.flattened-pom.xml
             **/target/*.jar
