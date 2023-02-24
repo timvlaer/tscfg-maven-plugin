@@ -25,7 +25,7 @@ import static java.nio.file.StandardOpenOption.*;
  * Maven plugin that generates the boiler-plate Java code for a <a href="https://github.com/lightbend/config">Typesafe Config</a> properties file
  * using <a href="https://github.com/carueda/tscfg">tscfg</a>.
  */
-@Mojo(name = "generate-config-class", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
+@Mojo(name = "generate-config-class", defaultPhase = LifecyclePhase.GENERATE_SOURCES, threadSafe = true)
 public class TscfgJavaGeneratorMojo extends AbstractMojo {
 
   /**
