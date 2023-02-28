@@ -47,7 +47,7 @@
     <tscfg.version>1.0.2</tscfg.version>
     <errorprone.version>2.18.0</errorprone.version>
     <mockito.version>4.11.0</mockito.version>
-    <plugin-tools.version>3.7.1</plugin-tools.version>
+    <plugin-tools.version>3.8.1</plugin-tools.version>
     <surefire.version>2.22.2</surefire.version>
   </properties>
 
@@ -116,7 +116,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
+        <version>3.11.0</version>
         <configuration>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
@@ -167,6 +167,7 @@
           <addTestClassPath>true</addTestClassPath>
           <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
           <extraArtifacts>
+            <extraArtifact>org.codehaus.plexus:plexus-utils:1.1:jar</extraArtifact>
             <extraArtifact>org.scala-lang:scala3-library_3:3.1.3:pom</extraArtifact>
             <extraArtifact>org.scala-lang:scala3-library_3:3.1.1:pom</extraArtifact>
             <extraArtifact>org.scala-lang:scala-library:2.13.6:pom</extraArtifact>
@@ -176,8 +177,9 @@
             <extraArtifact>org.apache.maven.plugins:maven-resources-plugin:3.3.0:maven-plugin</extraArtifact>
             <extraArtifact>org.junit:junit-bom:5.7.2:pom</extraArtifact>
             <extraArtifact>org.junit:junit-bom:5.7.1:pom</extraArtifact>
-            <extraArtifact>org.apache.maven.plugins:maven-compiler-plugin:3.10.1:maven-plugin</extraArtifact>
-            <extraArtifact>org.junit:junit-bom:5.8.2:pom</extraArtifact>
+            <extraArtifact>org.apache.maven.plugins:maven-compiler-plugin:3.11.0:maven-plugin</extraArtifact>
+            <extraArtifact>org.junit:junit-bom:5.9.1:pom</extraArtifact>
+            <extraArtifact>org.codehaus.plexus:plexus-component-annotations:2.1.1:pom</extraArtifact>
           </extraArtifacts>
         </configuration>
         <executions>
