@@ -165,6 +165,7 @@
           </goals>
           <postBuildHookScript>verify</postBuildHookScript>
           <addTestClassPath>true</addTestClassPath>
+          <showErrors>true</showErrors>
           <showVersion>true</showVersion>
           <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
           <extraArtifacts>
