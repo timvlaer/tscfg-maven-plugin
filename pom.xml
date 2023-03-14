@@ -184,6 +184,7 @@
           <showErrors>true</showErrors>
           <showVersion>true</showVersion>
           <streamLogsOnFailures>true</streamLogsOnFailures>
+          <writeJunitReport>true</writeJunitReport>
           <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
           <extraArtifacts>
             <extraArtifact>org.codehaus.plexus:plexus-utils:1.1:jar</extraArtifact>
