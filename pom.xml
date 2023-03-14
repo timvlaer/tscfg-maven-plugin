@@ -45,9 +45,12 @@
     <maven.prerequisite>3.6.3</maven.prerequisite>
 
     <tscfg.version>1.0.2</tscfg.version>
+    <typesafe-config.version>1.4.2</typesafe-config.version>
     <errorprone.version>2.18.0</errorprone.version>
     <mockito.version>4.11.0</mockito.version>
     <plugin-tools.version>3.8.1</plugin-tools.version>
+    <resources.version>3.3.0</resources.version>
+    <compiler.version>3.11.0</compiler.version>
     <surefire.version>3.0.0</surefire.version>
   </properties>
 
@@ -104,6 +107,11 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
+        <groupId>com.typesafe</groupId>
+        <artifactId>config</artifactId>
+        <version>${typesafe-config.version}</version>
+      </dependency>
+      <dependency>
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
         <version>${errorprone.version}</version>
@@ -116,7 +124,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>${compiler.version}</version>
         <configuration>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
@@ -176,10 +184,10 @@
             <extraArtifact>org.scala-lang:scala3-library_3:3.0.0:pom</extraArtifact>
             <extraArtifact>org.scala-lang:scala-library:2.13.5:pom</extraArtifact>
             <extraArtifact>org.scala-lang.modules:scala-collection-compat_3:2.4.4:pom</extraArtifact>
-            <extraArtifact>org.apache.maven.plugins:maven-resources-plugin:3.3.0:maven-plugin</extraArtifact>
+            <extraArtifact>org.apache.maven.plugins:maven-resources-plugin:${resources.version}:maven-plugin</extraArtifact>
             <extraArtifact>org.junit:junit-bom:5.7.2:pom</extraArtifact>
             <extraArtifact>org.junit:junit-bom:5.7.1:pom</extraArtifact>
-            <extraArtifact>org.apache.maven.plugins:maven-compiler-plugin:3.11.0:maven-plugin</extraArtifact>
+            <extraArtifact>org.apache.maven.plugins:maven-compiler-plugin:${compiler.version}:maven-plugin</extraArtifact>
             <extraArtifact>org.junit:junit-bom:5.9.1:pom</extraArtifact>
             <extraArtifact>org.codehaus.plexus:plexus-component-annotations:2.1.1:pom</extraArtifact>
           </extraArtifacts>
@@ -319,7 +327,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>${resources.version}</version>
         <executions>
           <execution>
             <id>copy-licenses</id>

@@ -4,34 +4,34 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.github.timvlaer</groupId>
-  <artifactId>tscfg-maven-plugin-test</artifactId>
-  <version>0.0.0</version>
+  <groupId>@project.groupId@</groupId>
+  <artifactId>@project.artifactId@-test</artifactId>
+  <version>@project.version@</version>
 
   <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>@java.version@</maven.compiler.source>
+    <maven.compiler.target>@java.version@</maven.compiler.target>
+    <project.build.sourceEncoding>@project.build.sourceEncoding@</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>@project.reporting.outputEncoding@</project.reporting.outputEncoding>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>com.typesafe</groupId>
       <artifactId>config</artifactId>
-      <version>1.4.2</version>
+      <version>@typesafe-config.version@</version>
     </dependency>
   </dependencies>
 
   <build>
     <plugins>
       <plugin>
-        <groupId>com.github.timvlaer</groupId>
-        <artifactId>tscfg-maven-plugin</artifactId>
+        <groupId>@project.groupId@</groupId>
+        <artifactId>@project.artifactId@</artifactId>
         <version>@project.version@</version>
         <configuration>
           <templateFile>tscfg/example.spec.conf</templateFile>
-          <packageName>com.github.timvlaer.generated.config</packageName>
+          <packageName>@project.groupId@.generated.config</packageName>
           <className>TestConfig</className>
           <generateGetters>true</generateGetters>
           <generateRecords>false</generateRecords>
@@ -50,12 +50,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>@resources.version@</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>@compiler.version@</version>
       </plugin>
     </plugins>
   </build>
@@ -67,7 +67,7 @@
         <jdk>[9,)</jdk>
       </activation>
       <properties>
-        <maven.compiler.release>8</maven.compiler.release>
+        <maven.compiler.release>@java.version@</maven.compiler.release>
       </properties>
     </profile>
   </profiles>
