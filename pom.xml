@@ -48,7 +48,7 @@
     <errorprone.version>2.18.0</errorprone.version>
     <mockito.version>4.11.0</mockito.version>
     <plugin-tools.version>3.8.1</plugin-tools.version>
-    <surefire.version>2.22.2</surefire.version>
+    <surefire.version>3.0.0</surefire.version>
   </properties>
 
   <prerequisites>
