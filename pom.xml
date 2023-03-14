@@ -48,6 +48,7 @@
     <typesafe-config.version>1.4.2</typesafe-config.version>
     <errorprone.version>2.18.0</errorprone.version>
     <mockito.version>4.11.0</mockito.version>
+    <assertj.version>3.24.2</assertj.version>
     <plugin-tools.version>3.8.1</plugin-tools.version>
     <resources.version>3.3.0</resources.version>
     <compiler.version>3.11.0</compiler.version>
@@ -99,7 +100,7 @@
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.24.2</version>
+      <version>${assertj.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -167,12 +168,18 @@
       <plugin>
         <artifactId>maven-invoker-plugin</artifactId>
         <version>3.5.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
+          </dependency>
+        </dependencies>
         <configuration>
           <goals>
             <goal>compile</goal>
           </goals>
           <postBuildHookScript>verify</postBuildHookScript>
-          <addTestClassPath>true</addTestClassPath>
           <showErrors>true</showErrors>
           <showVersion>true</showVersion>
           <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
