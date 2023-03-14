@@ -182,6 +182,7 @@
           <postBuildHookScript>verify</postBuildHookScript>
           <showErrors>true</showErrors>
           <showVersion>true</showVersion>
+          <streamLogsOnFailures>true</streamLogsOnFailures>
           <localRepositoryPath>${project.build.directory}/it-repo</localRepositoryPath>
           <extraArtifacts>
             <extraArtifact>org.codehaus.plexus:plexus-utils:1.1:jar</extraArtifact>
