@@ -53,6 +53,7 @@
     <resources.version>3.3.0</resources.version>
     <compiler.version>3.11.0</compiler.version>
     <surefire.version>3.0.0</surefire.version>
+    <fluido.version>1.11.2</fluido.version>
   </properties>
 
   <prerequisites>
@@ -116,6 +117,11 @@
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
         <version>${errorprone.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven.skins</groupId>
+        <artifactId>maven-fluido-skin</artifactId>
+        <version>${fluido.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
