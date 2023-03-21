@@ -11,6 +11,7 @@
   <properties>
     <maven.compiler.source>@java.version@</maven.compiler.source>
     <maven.compiler.target>@java.version@</maven.compiler.target>
+    <project.build.outputTimestamp>@project.build.outputTimestamp@</project.build.outputTimestamp>
     <project.build.sourceEncoding>@project.build.sourceEncoding@</project.build.sourceEncoding>
     <project.reporting.outputEncoding>@project.reporting.outputEncoding@</project.reporting.outputEncoding>
   </properties>
