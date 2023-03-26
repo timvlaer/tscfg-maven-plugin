@@ -136,9 +136,9 @@
         <configuration>
           <showDeprecation>true</showDeprecation>
           <showWarnings>true</showWarnings>
+          <failOnWarning>true</failOnWarning>
           <compilerArgs>
             <arg>-Xlint:all,-processing</arg>
-            <arg>-Werror</arg>
           </compilerArgs>
         </configuration>
       </plugin>
