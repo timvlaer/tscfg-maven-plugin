@@ -53,7 +53,7 @@
     <plugin-tools.version>3.8.2</plugin-tools.version>
     <resources.version>3.3.1</resources.version>
     <compiler.version>3.11.0</compiler.version>
-    <surefire.version>3.0.0</surefire.version>
+    <surefire.version>3.1.0</surefire.version>
     <fluido.version>1.11.2</fluido.version>
   </properties>
 
