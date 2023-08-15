@@ -34,7 +34,7 @@
   </scm>
 
   <properties>
-    <maven.version>3.6.3</maven.version>
+    <maven.version>3.8.1</maven.version>
 
     <tscfg.version>0.9.981</tscfg.version>
   </properties>
